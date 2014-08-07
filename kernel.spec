@@ -11,7 +11,7 @@ Summary: The Linux kernel
 %global released_kernel 1
 
 %define rpmversion 3.10.0
-%define pkgrelease 123.el7
+%define pkgrelease 123.1.2.el7
 
 %define pkg_release %{pkgrelease}%{?buildid}
 
@@ -528,7 +528,7 @@ Summary: The CentOS Linux kernel ABI symbol whitelists
 Group: System Environment/Kernel
 AutoReqProv: no
 %description -n kernel-abi-whitelists
-The kABI package contains information pertaining to the CentOS 
+The kABI package contains information pertaining to the CentOS
 Linux kernel ABI, including lists of kernel symbols that are needed by
 external Linux kernel modules, and a yum plugin to aid enforcement.
 
@@ -827,7 +827,7 @@ BuildKernel() {
     fi
 # EFI SecureBoot signing, x86_64-only
 %ifarch x86_64
-    %pesign -s -i $KernelImage -o $KernelImage.signed -a %{SOURCE13} -c %{SOURCE13}-n redhatsecureboot301
+    %pesign -s -i $KernelImage -o $KernelImage.signed -a %{SOURCE13} -c %{SOURCE13} -n redhatsecureboot301
     mv $KernelImage.signed $KernelImage
 %endif
     $CopyKernel $KernelImage $RPM_BUILD_ROOT/%{image_install_path}/$InstallName-$KernelVer
@@ -1472,10 +1472,13 @@ fi
 %kernel_variant_files %{with_kdump} kdump
 
 %changelog
-* Tue Jun 24 2014 Karanbir Singh <kbsingh@centos.org> [3.10.0-123.el7.centos]
+* Tue Jun 24 2014 Karanbir Singh <kbsingh@centos.org> [3.10.0-123.1.2.el7.centos]
 - Patch in CentOS SecureBoot certs
-- Add in debranding patches 
-- Add in CentOS driver and kpatch certs
+- Add in debranding patches
+- Add in CentOS driver update and kpatch certs
+
+* Wed Jun 4 2014 Phillip Lougher <plougher@redhat.com> [3.10.0-123.1.2.el7]
+- [tty] n_tty: Fix n_tty_write crash when echoing in raw mode (Aristeu Rozanski) [1094241 1094242] {CVE-2014-0196}
 
 * Mon May 05 2014 Jarod Wilson <jarod@redhat.com> [3.10.0-123.el7]
 - [mm] rmap: try_to_unmap_cluster() should lock_page() before mlocking (Larry Woodman) [1078349] {CVE-2014-3122}
